@@ -1,0 +1,46 @@
+{% load static %}
+<div id="myNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="#">درباره قفلی</a>
+        <a href="#">وب‌سرویس</a>
+        <a href="#">همکاری با قفلی</a>
+        <a href="#">تبلیغات در قفلی</a>
+    </div>
+
+</div>
+
+<div class="website-header">
+    <div class="container">
+        <header class="row">
+            <div id="main-logo" class="pull-right col-xs-6">
+                <a href="/" alt="قفلی بُردگیم" title="بانک اطلاعاتی بازی‌های فکری و بُردگیم"><img
+                        src="{% static "images/ghofli-logo-s.svg" %}" class="hidden-xs"><img
+                        src="{% static "images/ghofli-logo-xs.svg" %}" class="visible-xs"></a>
+            </div>
+
+            <nav class="nav1 col-xs-6" role="navigation">
+                <ul class="pull-left">
+                    {% if user.has_user == 0 %}
+                        <li class="hidden-xs"><a href="/signup" alt="" class="pull-left" id="main-nav-user"><i
+                                class="fa fa-user"></i>ثبت نام</a></li>
+                        <li class="hidden-xs"><a href="/login" alt="" class="pull-left" id="main-nav-user"><i
+                                class="fa fa-user"></i>ورود</a></li>
+                    {% endif %}
+                    {% if user.has_user == 1 %}
+                        <li class="hidden-xs"><a href="/profile" alt="" class="pull-left" id="main-nav-user"><i
+                                class="fa fa-user"></i>{{ user.username }}</a></li>
+                    {% endif %}
+                    <li><a href="/" class="pull-left"><i class="fa fa-search"></i></a></li>
+                    <li><a class="pull-left" id="menu-bars"><i class="fa fa-bars"></i></a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+
+</div>

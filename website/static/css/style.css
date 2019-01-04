@@ -1,0 +1,732 @@
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/eot/IRANSansWeb_Bold.eot');
+    src: url('../fonts/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/woff2/IRANSansWeb_Bold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/eot/IRANSansWeb_Medium.eot');
+    src: url('../fonts/eot/IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/woff2/IRANSansWeb_Medium.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/woff/IRANSansWeb_Medium.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/ttf/IRANSansWeb_Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/eot/IRANSansWeb_Light.eot');
+    src: url('../fonts/eot/IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/woff2/IRANSansWeb_Light.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/woff/IRANSansWeb_Light.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/ttf/IRANSansWeb_Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 200;
+    src: url('../fonts/eot/IRANSansWeb_UltraLight.eot');
+    src: url('../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/woff2/IRANSansWeb_UltraLight.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/woff/IRANSansWeb_UltraLight.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/eot/IRANSansWeb.eot');
+    src: url('../fonts/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/woff2/IRANSansWeb.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/woff/IRANSansWeb.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSansNUMS;
+    src: url('../fonts/ttf/IRANSansMonoSpacedNum_Medium.ttf');
+}
+
+body {
+    background-color: #F5F5F5;
+    padding: 0 !important;
+    min-height: 0px;
+    text-align: right;
+    font-size: 13px;
+    font-family: 'IRANSans', tahoma, serif;
+    font-weight: normal;
+    direction: rtl;
+    min-height: 0 !important;
+    margin-bottom: 30px;
+    border-top: 10px solid #F5457A;
+    color: #525A70;
+}
+
+h5 {
+    font-family: IRANSansNUMS;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.clear {
+    clear: both;
+}
+
+::selection {
+    background: #f5457a; /* WebKit/Blink Browsers */
+    color: white;
+}
+
+::-moz-selection {
+    background: #f5457a; /* Gecko Browsers */
+    color: white;
+}
+
+svg {
+    font-family: "Helvetica Neue", Helvetica;
+}
+
+/*---------------------------------fullscreen nav----------------------------------------*/
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    background-color: rgb(82, 90, 112);
+    background-color: rgba(82, 90, 112, 0.95);
+    overflow-x: hidden;
+    transition: 0.3s;
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: white;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+    font-weight: 200;
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #F5457A;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    left: 45px;
+    font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px
+    }
+
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+/*---------------------------------Website Header----------------------------------------*/
+
+.website-header {
+    height: 100px;
+    background: white;
+    border-bottom: 5px solid #d5d5d5;
+    margin-bottom: 30px;
+}
+
+.website-header .row {
+    margin-top: 30px;
+}
+
+#main-logo {
+
+}
+
+nav.nav1 {
+
+}
+
+nav.nav1 ul {
+
+}
+
+nav.nav1 ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+nav.nav1 ul li a {
+    font-size: 15px;
+    padding: 10px;
+    font-weight: 400;
+    color: #F5457A;
+}
+
+nav.nav1 ul li:hover a {
+    color: #4EB79D;
+}
+
+nav.nav1 ul li a#main-nav-user i {
+    padding-left: 10px;
+}
+
+nav.nav1 ul li #menu-bars {
+    cursor: pointer;
+}
+
+nav.nav1 ul li a i {
+
+}
+
+/*---------------------------------Game Header----------------------------------------*/
+.game-header {
+    margin: 0 auto 30px auto;
+
+}
+
+.game-header .img-wrapper {
+    position: relative;
+}
+
+.game-header .game-img a i {
+    position: absolute;
+    bottom: 11px;
+    right: 11px;
+    background: white;
+    padding: 10px 0 0 10px;
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    border-top-left-radius: 5px;
+    color: #4EB79D;
+}
+
+.game-header .game-img a i:hover {
+    color: #F5457A;
+}
+
+.game-header .game-img img {
+    margin-top: 15px;
+    display: inline-block;
+    padding: 10px;
+    background: white;
+    border: 1px solid #d5d5d5;
+    width: 100%
+}
+
+.game-header .game-info {
+    margin-top: 15px;
+}
+
+.game-header .game-info .rating {
+    font-size: 40px;
+    padding: 10px 20px 5px 20px;
+    background: #4EB79D;
+    color: white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.game-header .rank {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.game-header .rank-wrapper {
+    margin-bottom: 30px;
+}
+
+.game-header .game-overall-rank span.value {
+    font-weight: 100;
+    color: #F5457A;
+}
+
+.value {
+    font-family: IRANSansNUMS;
+}
+
+.game-header .rank i {
+    margin-left: 5px;
+}
+
+.game-header .rank:hover i {
+    color: #F5457A;
+}
+
+.game-header .game-thematic-rank {
+}
+
+.game-header .game-info .game-title {
+    font-size: 20px;
+    line-height: 30px;
+    margin: 0;
+    display: block;
+}
+
+.game-header .game-info .game-year {
+    display: block;
+    margin: 0;
+}
+
+.game-header .game-stats {
+    margin-top: 50px;
+    border-top: 1px solid #ddd;
+}
+
+.game-header .game-stats .player-count {
+    border-left: 1px solid #d5d5d5;
+    padding: 0;
+}
+
+.game-header .game-stats .time {
+    border-left: 1px solid #d5d5d5;
+}
+
+.game-header .game-stats .player-age {
+}
+
+.game-header .game-stats .weight {
+    border-right: 1px solid #d5d5d5;
+    padding-left: 0;
+}
+
+.game-header .game-stats .row {
+    margin-top: 0;
+}
+
+.game-header .game-stats h5 {
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.game-header .game-stats span.des {
+    font-weight: 300;
+    font-size: 13px;
+}
+
+/*---------------------------------Game Buttons----------------------------------------*/
+
+.game-buttons {
+    padding: 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.game-buttons .game-button .my-button-label {
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.game-buttons .game-button {
+    display: inline-block;
+}
+
+.game-buttons .game-button a {
+    background: #525A70;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    color: white;
+    padding: 5px;
+}
+
+.game-buttons .game-button i {
+    font-size: 15px;
+    background: #868B9B;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+.game-buttons .star a {
+    padding: 0 15px;
+}
+
+.game-buttons .star i {
+    background: none;
+    padding: 17px 2px;
+}
+
+.game-buttons .game-button i:hover {
+    background: #F5457A;
+
+}
+
+.game-buttons .star i:hover {
+    background: none;
+}
+
+/*---------------------------------Game overall----------------------------------------*/
+
+.game-overall {
+    background: white;
+    padding: 75px 0;
+    border-bottom: 10px solid #6C2863;
+}
+
+.game-overall div div {
+    border-right: 1px solid #d5d5d5;
+    height: 100px;
+}
+
+.game-overall div .overall-credits {
+    border-right: none;
+}
+
+.game-overall div div h4 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #F5457A;
+}
+
+.game-overall div div ul {
+    padding-right: 0;
+    list-style-type: none;
+}
+
+.game-overall div div ul li {
+
+}
+
+.game-overall div div ul li a {
+    font-weight: 500;
+    padding-left: 5px;
+}
+
+.game-overall div div ul li a:hover {
+    text-decoration: underline;
+}
+
+.game-overall div div ul li .title {
+    font-weight: 200;
+    padding-left: 5px;
+}
+
+/*---------------------------------Game overview----------------------------------------*/
+
+.game-overview {
+    margin: 50px auto;
+    font-size: 13px;
+    line-height: 25px;
+}
+
+.game-overview p {
+
+}
+
+.game-overview ul {
+    padding-right: 0;
+}
+
+.game-overview ul li {
+    list-style-type: none;
+}
+
+.game-overview h4 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #F5457A;
+}
+
+/*---------------------------------Game details nav----------------------------------------*/
+
+.game-details {
+    padding: 50px 0;
+    background: white;
+}
+
+.game-details .details-nav {
+    text-align: right;
+    padding-right: 0;
+}
+
+.game-details .details-nav ul {
+    border: none;
+    padding: 0;
+    border-left: 1px solid #F5457A;
+    width: 100%;
+}
+
+.game-details .details-nav ul li {
+    float: none;
+}
+
+.game-details .details-nav ul li i {
+    padding-left: 15px;
+    width: 30PX;
+    TEXT-ALIGN: center;
+}
+
+.game-details .details-nav ul li a {
+    border: none;
+    border-radius: 0;
+}
+
+.game-details .details-nav ul li a:hover {
+    border: none;
+    background: none;
+    color: #F5457A;
+}
+
+.game-details .details-nav ul li.active a {
+    color: white;
+    border: none;
+    background: #F5457A;
+}
+
+/*---------------------------------Game details panels----------------------------------------*/
+.game-details .graph {
+    height: 300px;
+    -webkit-border-radius: 400px;
+    -moz-border-radius: 400px;
+    border-radius: 400px;
+    background-color: antiquewhite;
+}
+
+.game-details h4 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #F5457A;
+    margin-bottom: 30px;
+}
+
+.game-details table {
+    width: 100%;
+    line-height: 30px;
+}
+
+.game-details td {
+    font-weight: 200;
+}
+
+.game-details td.value {
+    text-align: left;
+    font-weight: 400;
+}
+
+#image-gallery .img-wrapper {
+    height: 30rem;
+}
+
+#image-gallery .img-wrapper img {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+#image-gallery .img-description {
+    display: block;
+    line-height: 30px;
+    margin-top: 5px;
+}
+
+#image-gallery .author {
+    margin-bottom: 40px;
+    display: block;
+    font-weight: 200;
+}
+
+#reviews ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#reviews .file-type {
+    padding: 5px;
+    border: 1px solid #d5d5d5;
+    color: #999;
+    margin-left: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+#reviews .file-title {
+
+    font-weight: 500;
+    border-left: 1px solid #d5d5d5;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
+#reviews .file-title:hover {
+    color: #F5457A;
+}
+
+#files ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#files .file-type {
+    padding: 5px;
+    border: 1px solid #d5d5d5;
+    color: #999;
+    margin-left: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+#files .file-title {
+
+    font-weight: 500;
+    border-left: 1px solid #d5d5d5;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
+#files .file-title:hover {
+    color: #F5457A;
+}
+
+#files ul li {
+
+}
+
+#files ul li .file-links {
+    padding-left: 10px;
+    margin-left: 10px;
+    border-left: 1px solid #d5d5d5;
+    font-weight: 300;
+}
+
+.rating {
+    font-family: IRANSansNUMS;
+}
+
+@media (max-width: 768px) {
+    #image-gallery .img-wrapper {
+        height: auto;
+    }
+
+    .game-header {
+        margin-top: 15px;
+    }
+
+    .game-header .game-info .rating {
+        font-size: 20px;
+        padding: 20px 10px;
+    }
+
+    .game-header .game-info .game-title {
+        font-size: 15px;
+        line-height: 25px;
+    }
+
+    .game-header .game-stats .time {
+        border-left: none;
+        border-bottom: 1px solid #d5d5d5;
+        border-right: 1px solid #d5d5d5;
+    }
+
+    .game-header .game-stats .player-count {
+        border-bottom: 1px solid #d5d5d5;
+        border-left: 0;
+    }
+
+    .game-header .game-stats .player-age {
+        padding-right: 0;
+    }
+
+    .game-header .game-stats .weight {
+    }
+
+    .game-header .game-stats {
+        margin-top: 20px;
+        border-top: none;
+    }
+
+    .game-header .game-stats h5 {
+        margin-top: 20px;
+    }
+
+    .game-header .game-stats span.des {
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .game-header .game-info .game-title {
+        font-size: 18px;
+        line-height: 25px;
+        text-align: left;
+        padding: 0;
+        margin: 0;
+    }
+
+    .game-header .game-info .game-year {
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .game-overall {
+        padding: 20px 0 0 0;
+    }
+
+    .game-overall div div {
+        text-align: center;
+        height: auto;
+        margin-bottom: 25px;
+        border: none;
+    }
+
+    nav.nav1 ul li a {
+        padding-top: 10px;
+        padding-right: 0px;
+    }
+
+    .game-overview {
+        margin: 20px auto;
+    }
+
+    .game-overview h4 {
+        text-align: center;
+    }
+
+    .game-overview p {
+        text-align: justify;
+        margin-bottom: 40px;
+    }
+}
+
+#full-info h5 {
+    margin-top: 15px;
+}
+
+#full-info a {
+    margin-right: 20px;
+}

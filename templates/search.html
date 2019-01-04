@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>قُفلی بُردگیم</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/navbar-fixed-top.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <style>
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            color: #777;
+            direction: inherit;
+        }
+
+        .bgimg-1 {
+            opacity: 0.65;
+            background-position: center;
+            background-size: cover;
+            margin-bottom: 5%;
+        }
+
+        .caption {
+            width: 100%;
+            text-align: center;
+            color: #000;
+        }
+
+        .contact-icons .fa {
+            font-size: 2.5rem;
+            padding: 7px;
+            color: black;
+        }
+
+        .contact-icons {
+            margin-top: 5%;
+        }
+
+        .fa-search {
+            font-size: 1.4rem;
+        }
+
+        nav {
+            direction: rtl;
+        }
+
+        .rateCard {
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .rateCard h4 {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .rateContent {
+            padding: 0 10px 0 5px;
+        }
+
+        #bgName {
+            margin-top: 7%;
+        }
+
+        .rateContent .row {
+            margin-right: -10px;
+            margin-left: -5px;
+            border-bottom: 1px solid beige;
+            padding-top: 18px;
+            border-top: 1px solid beige;
+        }
+
+        .rateContent .row:hover {
+            background-color: #eeeeee;
+        }
+
+    </style>
+    <script src="{% static "js/jquery-3.1.1.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+
+</head>
+<body>
+{% include "header.html" %}
+<div class="bgimg-1">
+    <div class="caption">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <form action="searchproduct" method="get">
+                        <div class="input-group">
+                            <div class="input-group-btn search-panel">
+                                <button style="height: 5rem;" type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    <span style="font-family: IRANSans" id="search_concept">عناوین</span> <span
+                                        class="caret"></span>
+                                </button>
+                                <ul style="font-family: IRANSans;direction: rtl;text-align: right" class="dropdown-menu"
+                                    role="menu">
+                                    <li><a href="#overall">کلی</a></li>
+                                    <li><a href="#strategy">استراتژی</a></li>
+                                    <li><a href="#thematic">تماتیک</a></li>
+                                    <li><a href="#war">جنگ</a></li>
+                                    <li><a href="#family">خانواده</a></li>
+                                    <li><a href="#abstract">استراتژی انتزاعی</a></li>
+                                    <li><a href="#party">مهمانی</a></li>
+                                    <li><a href="#children">کودکان</a></li>
+
+                                </ul>
+                            </div>
+
+                            <input type="hidden" name="search_param" value="all" id="search_param">
+                            <input style="height: 5rem;text-align: right;direction: rtl;font-family: IRANSans"
+                                   type="text" class="form-control"
+                                   name="q" placeholder="جست و جو در ...">
+                            <span class="input-group-btn">
+                    <button style="height: 5rem;" class="btn btn-default" type="submit"><span
+                            style="font-size: 15px" class="fa fa-search"></span></button>
+
+                        </span>
+                        </div>
+                    </form>
+                    <div class="contact-icons">
+                        <a href=""><i class="fa fa-phone"></i></a>
+                        <a href=""><i class="fa fa-instagram"></i></a>
+                        <a href=""><i class="fa fa-paper-plane"></i></a>
+                        <a href=""><i class="fa fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="rateCard">
+                <h4>رتبه‌های برتر استراتژیک</h4>
+                <div class="rateContent">
+                    {% for s_bg in strategy_bg %}
+                    <a href="/boardgame/{{ s_bg.boardgame.bgg_code }}">
+                        <div class="row">
+                            <div id="bgName" class="col-md-8">
+                                <p>{{ s_bg.boardgame.name }}</p>
+                            </div>
+                            <div id="image" class="col-md-4">
+                                <img class="img-responsive thumbnail"
+                                     src="../public{{ s_bg.boardgame.bg_image.url }}">
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="rateCard">
+                <h4>رتبه‌های برتر تماتیک</h4>
+                <div class="rateContent">
+                    {% for s_bg in thematic %}
+                    <a href="/boardgame/{{ s_bg.boardgame.bgg_code }}">
+                        <div class="row">
+                            <div id="bgName" class="col-md-8">
+                                <p>{{ s_bg.boardgame.name }}</p>
+                            </div>
+                            <div id="image" class="col-md-4">
+                                <img class="img-responsive thumbnail"
+                                     src="../public{{ s_bg.boardgame.bg_image.url }}">
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="rateCard">
+                <h4>رتبه‌های برتر خانوادگی</h4>
+                <div class="rateContent">
+                    {% for s_bg in family_top %}
+                    <a href="/boardgame/{{ s_bg.boardgame.bgg_code }}">
+                        <div class="row">
+                            <div id="bgName" class="col-md-8">
+                                <p>{{ s_bg.boardgame.name }}</p>
+                            </div>
+                            <div id="image" class="col-md-4">
+                                <img class="img-responsive thumbnail"
+                                     src="../public{{ s_bg.boardgame.bg_image.url }}">
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/script.js" %}"></script>
+<script>
+    $(document).ready(function (e) {
+        $('.search-panel .dropdown-menu').find('a').click(function (e) {
+            e.preventDefault();
+            var param = $(this).attr("href").replace("#", "");
+            var concept = $(this).text();
+            $('.search-panel span#search_concept').text(concept);
+            $('.input-group #search_param').val(param);
+        });
+    });
+</script>
+</body>
+</html>

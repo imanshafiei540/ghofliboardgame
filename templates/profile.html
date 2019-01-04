@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>قُفلی بُردگیم</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/navbar-fixed-top.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="{% static "js/jquery-3.1.1.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <style>
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            color: #777;
+            direction: inherit;
+        }
+
+        nav {
+            direction: rtl;
+        }
+
+        .profileCard {
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .profileCard h4 {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .profileContent {
+            padding: 0 40px 0 40px;
+        }
+
+        .profileContent .btn{
+            width: 100%;
+            margin: 30px 0 40px 0;
+        }
+
+        .rateCard {
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .rateCard h4 {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .rateContent {
+            padding: 0 10px 0 5px;
+        }
+
+        #bgName {
+            margin-top: 7%;
+        }
+
+        .rateContent .row {
+            margin-right: -10px;
+            margin-left: -5px;
+            border-bottom: 1px solid beige;
+            padding-top: 18px;
+            border-top: 1px solid beige;
+        }
+
+        .rateContent .row:hover {
+            background-color: #eeeeee;
+        }
+
+    </style>
+
+</head>
+<body>
+{% include "header.html" %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="profileCard">
+                <h4>مشخصات من</h4>
+                <div class="profileContent">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pwd">پست الکترونیک</label>
+                                <input type="email" class="form-control" id="pwd">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="usr">نام کاربری</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                        </div>
+                        <div class="col-md-offset-4 col-md-4">
+                            <button type="button" class="btn btn-success">ویرایش اطلاعات</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="rateCard">
+                <h4>لایک‌های اخیر</h4>
+                <div class="rateContent">
+                    {% for s_bg in userdata.likes %}
+                        <a href="/boardgame/{{ s_bg.boardgame.bgg_code }}">
+                            <div class="row">
+                                <div id="bgName" class="col-md-8">
+                                    <p>{{ s_bg.boardgame.name }}</p>
+                                </div>
+                                <div id="image" class="col-md-4">
+                                    <img class="img-responsive thumbnail"
+                                         src="../public{{ s_bg.boardgame.bg_image.url }}">
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="rateCard">
+                <h4>آرزوهای من</h4>
+                <div class="rateContent">
+                    {% for s_bg in userdata.wishes %}
+                        <a href="/boardgame/{{ s_bg.boardgame.bgg_code }}">
+                            <div class="row">
+                                <div id="bgName" class="col-md-8">
+                                    <p>{{ s_bg.boardgame.name }}</p>
+                                </div>
+                                <div id="image" class="col-md-4">
+                                    <img class="img-responsive thumbnail"
+                                         src="../public{{ s_bg.boardgame.bg_image.url }}">
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="rateCard">
+                <h4>دارایی‌هام</h4>
+                <div class="rateContent">
+                    {% for s_bg in userdata.hases %}
+                        <a href="/boardgame/{{ s_bg.boardgame.bgg_code }}">
+                            <div class="row">
+                                <div id="bgName" class="col-md-8">
+                                    <p>{{ s_bg.boardgame.name }}</p>
+                                </div>
+                                <div id="image" class="col-md-4">
+                                    <img class="img-responsive thumbnail"
+                                         src="../public{{ s_bg.boardgame.bg_image.url }}">
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="rateCard">
+                <h4>رتبه‌بندی‌هام</h4>
+                <div class="rateContent">
+                    {% for s_bg in userdata.rates %}
+                        <a href="/boardgame/{{ s_bg.boardgame.rates }}">
+                            <div class="row">
+                                <div id="bgName" class="col-md-8">
+                                    <p>({{ s_bg.rate }}) {{ s_bg.boardgame.name }}</p>
+                                </div>
+                                <div id="image" class="col-md-4">
+                                    <img class="img-responsive thumbnail"
+                                         src="../public{{ s_bg.boardgame.bg_image.url }}">
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/script.js" %}"></script>
+<script>
+    $(document).ready(function (e) {
+        $('.search-panel .dropdown-menu').find('a').click(function (e) {
+            e.preventDefault();
+            var param = $(this).attr("href").replace("#", "");
+            var concept = $(this).text();
+            $('.search-panel span#search_concept').text(concept);
+            $('.input-group #search_param').val(param);
+        });
+    });
+</script>
+</body>
+</html>

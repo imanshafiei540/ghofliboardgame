@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>قُفلی بُردگیم</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/navbar-fixed-top.css" %}" rel="stylesheet">
+    <style>
+        .card {
+            background-color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .grid-item {
+            width: 220px;
+        }
+
+        .grid-item--width2 {
+            width: 400px;
+        }
+
+        .grid {
+            margin-right: 2%;
+        }
+
+        @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+            .grid {
+                margin-right: 11%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+{% include "header.html" %}
+<div class="container">
+    <div class="grid">
+        {% for bg in boardgames %}
+            <div style="float: right" class="grid-item col-md-2 col-xs-12">
+                <a href="/boardgame/{{ bg.bgg_code }}">
+                    <div class="card">
+                        <img class="img-responsive" src="public{{ bg.bg_image.url }}">
+                        <p style="text-align: center;font-family: monospace;padding: 10px 0 20px 0">{{ bg.name }}</p>
+                    </div>
+                </a>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+<script src="{% static "js/jquery-3.1.1.min.js" %}"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script>
+    $('.grid').masonry({
+        // options
+        itemSelector: '.grid-item',
+        columnWidth: 220,
+        isOriginLeft: false
+    });
+</script>
+</body>
+</html>

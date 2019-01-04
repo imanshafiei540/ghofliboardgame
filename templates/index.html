@@ -1,0 +1,502 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>قُفلی بُردگیم</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/navbar-fixed-top.css" %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static "css/star-rating-svg.css" %}">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        .liked {
+            background: #F5457A !important;
+        }
+    </style>
+</head>
+
+<body ng-app="bgapp">
+{% include "header.html" %}
+<div class="container game-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 game-img pull-right">
+            {% for item in ranks %}
+                <div class="rank game-thematic-rank pull-right visible-xs"><a href="#"
+                                                                              alt="">رنکینگ {{ item.name }}:</a><span
+                        class="value">  {{ item.val }}</span></div>
+            {% endfor %}
+
+            <div class="img-wrapper"><img src="../public{{ boardgame.bg_image.url }}"><a target="_blank"
+                                                                                         href="https://boardgamegeek.com/boardgame/{{ boardgame.bgg_code }}"
+                                                                                         alt=""
+                                                                                         title="مشاهده صفحه این بازی در سایت BGG.COM"><i
+                    class="fa fa-external-link"></i></a></div>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 game-info">
+            <div class="media">
+                <div class="media-right">
+                    <div class="rating">{{ overallval }}</div>
+                </div>
+                <div class="media-body">
+                    <div class="rank-wrapper hidden-xs">
+                        {% for item in ranks %}
+                            <div class="rank game-thematic-rank pull-right"><a href="#"
+                                                                               alt="">رنکینگ {{ item.name }}:</a><span
+                                    class="value">  {{ item.val }}</span></div>
+                        {% endfor %}
+                    </div>
+                    <h2 class="game-title">{{ boardgame.name }}</h2>
+                    <h6 class="game-year">(<span class="value">{{ boardgame.year_published }}</span>)</h6>
+                </div>
+
+                <div class="container-fluid game-stats">
+                    <div class="row">
+                        <div class="pull-right col-xs-6 col-md-3 player-count">
+                            <h5>{{ boardgame.min_players }}<span> تا </span>{{ boardgame.max_players }} (
+                                بهترین: {{ boardgame.min_best_players }})</h5>
+                            <span class="des">تعداد بازیکن‌های بازی</span>
+                        </div>
+                        <div class="pull-right col-xs-6 col-md-3 time">
+                            <h5>{{ boardgame.min_play_time }}<span> تا </span>{{ boardgame.max_play_time }}</h5>
+                            <span class="des">دقیقه زمان بازی</span>
+                        </div>
+                        <div class="pull-right col-xs-6 col-md-3 player-age">
+                            <h5>{{ boardgame.min_age }} +</h5>
+                            <span class="des">سن مناسب بازیکن‌ها</span>
+                        </div>
+                        <div class="pull-right col-xs-6 col-md-3 weight">
+                            <h5><span> ۵/ </span>{{ boardgame.weight }}</h5>
+                            <span class="des">پیچیدگی توضیح‌دادن و یادگیری بازی</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container game-buttons" ng-controller="bgCtrl">
+    <div class="row">
+        <div class="col-xs-12 likes pull-right">
+            <div ng-click="like_bg()" class="game-button"><a class="btn btn-defualt" alt="" href="" role="button"><i
+                    ng-class="{'liked': is_like_bg == 1}" class="fa fa-heart"></i><span
+                    style="font-family: IRANSansNUMS"
+                    class="my-button-label hidden-xs">{a bg_likes a}</span></a></div>
+            <div ng-click="has_bg()" class="game-button"><a class="btn btn-defualt" alt="" href="" role="button"><i
+                    ng-class="{'liked': is_has_bg == 1}" class="fa fa-plus"></i><span class="my-button-label hidden-xs">من این بازی رو دارم</span></a>
+            </div>
+            <div ng-click="wish_bg()" class="game-button"><a class="btn btn-defualt" alt="" href="" role="button"><i
+                    ng-class="{'liked': is_wish_bg == 1}" class="fa fa-magic"></i><span
+                    class="my-button-label hidden-xs">کاش این بازی رو داشتم</span></a></div>
+            {% comment %}<div ng-click="rate_bg()" class="game-button star"><a class="btn btn-defualt" alt="" href=""
+                                                                  role="button"><i
+                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                    class="fa fa-star-o"></i></a></div>{% endcomment %}
+            <div class="game-button"><a style="padding: 8.5px" class="btn btn-defualt" alt="" href="" role="button">
+                <div style="direction: ltr" class="my-rating"></div>
+            </a></div>
+        </div>
+    </div>
+</div>
+<script>
+    var app = angular.module('bgapp', []);
+    app.config(['$interpolateProvider', function ($interpolateProvider) {
+        $interpolateProvider.startSymbol('{a');
+        $interpolateProvider.endSymbol('a}');
+    }]);
+    app.controller('bgCtrl', function ($scope, $http, $location) {
+        var url = $location.absUrl();
+        var bgg_code = url.split("/")[url.split("/").length - 1];
+        $http.get("/getcuser").then(function (response) {
+            $scope.user = response.data['username'];
+            $http.get("/getbglikes?bgg_code=" + bgg_code).then(function (response) {
+                $scope.bg_likes = response.data['bg_likes'];
+                $http.get("/getuserbg?bgg_code=" + bgg_code).then(function (response) {
+                    $scope.is_like_bg = response.data['is_user_like_bg'];
+                    $scope.is_wish_bg = response.data['is_user_wish_bg'];
+                    $scope.is_has_bg = response.data['is_user_has_bg'];
+                    $scope.user_rate = response.data['bg_rate_from_user'];
+                    console.log($scope.user_rate);
+                    $(".my-rating").starRating({
+                        starSize: 25,
+                        totalStars: 10,
+                        initialRating: parseInt($scope.user_rate),
+                        starShape: 'rounded',
+                        hoverColor: '#F5457A',
+                        activeColor: '#F5457A',
+                        disableAfterRate: false,
+                        readOnly: $scope.user === 0,
+                        useFullStars: true,
+                        callback: function (currentRating, $el) {
+                            $http.get("/ratebg?bgg_code=" + bgg_code + "&rate=" + currentRating).then(function (response) {
+
+                            });
+                        }
+                    });
+                });
+            });
+            $scope.like_bg = function (bg) {
+                console.log($scope.user);
+                if ($scope.user === 0) {
+                    console.log("Login Plz!")
+                }
+                else {
+                    $http.get("/likebg?bgg_code=" + bgg_code).then(function (response) {
+                        $http.get("/getbglikes?bgg_code=" + bgg_code).then(function (response) {
+                            $scope.bg_likes = response.data['bg_likes'];
+                            if ($scope.is_like_bg === 0) {
+                                $scope.is_like_bg = 1;
+                            }
+                            else if ($scope.is_like_bg === 1) {
+                                $scope.is_like_bg = 0;
+                            }
+                        });
+                    });
+                }
+            };
+            $scope.wish_bg = function (bg) {
+                if ($scope.user === 0) {
+                    console.log("Login Plz!")
+                }
+                else {
+                    $http.get("/wishbg?bgg_code=" + bgg_code).then(function (response) {
+                        if ($scope.is_wish_bg === 0) {
+                            $scope.is_wish_bg = 1;
+                        }
+                        else if ($scope.is_wish_bg === 1) {
+                            $scope.is_wish_bg = 0;
+                        }
+                    });
+                }
+            };
+            $scope.has_bg = function (bg) {
+                if ($scope.user === 0) {
+                    console.log("Login Plz!")
+                }
+                else {
+                    $http.get("/hasbg?bgg_code=" + bgg_code).then(function (response) {
+                        if ($scope.is_has_bg === 0) {
+                            $scope.is_has_bg = 1;
+                        }
+                        else if ($scope.is_has_bg === 1) {
+                            $scope.is_has_bg = 0;
+                        }
+                    });
+                }
+            };
+        });
+    });
+
+
+</script>
+<div class=" game-overall">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 pull-right overall-credits">
+                <h4>با حضور</h4>
+                <ul>
+                    <li><span class="title">طراح:</span><a target="_blank" alt=""
+                                                           href="https://boardgamegeek.com/boardgamedesigner/{{ designers.0.objectid }}"
+                                                           class="value">{{ designers.0.name }}</a></li>
+                    <li><span class="title">تصویرساز:</span><a target="_blank" alt=""
+                                                               href="https://boardgamegeek.com/boardgameartist/{{ artists.0.objectid }}"
+                                                               class="value">{{ artists.0.name }}</a>
+                    </li>
+                    <li><span class="title">ناشر:</span><a target="_blank" alt=""
+                                                           href="https://boardgamegeek.com/boardgamepublisher/{{ publishers.0.objectid }}"
+                                                           class="value">{{ publishers.0.name }}</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-2 pull-right overall-phase">
+                <h4>فاز بازی</h4>
+                <ul>
+                    {% for type in types %}
+                        <li><a alt="" href="{{ type.href }}" class="value">{{ type.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-3 pull-right overall-mehcanics">
+                <h4>مکانیسم‌های اصلی بازی</h4>
+                <ul>
+                    {% for mech in mechs %}
+                        <li><a alt="" href="{{ mech.href }}" class="value">{{ mech.name }}</a></li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-3 pull-right overall-group">
+                <h4>گروه‌بندی بازی</h4>
+                <ul>
+                    {% for fam in families %}
+                        <li><a alt="" href="{{ fam.href }}" class="value">{{ fam.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container game-overview">
+    <div class="row">
+        <div style="text-align: justify" class="col-xs-12 col-sm-8 pull-right">
+            <h4>توضیحات کلی</h4>
+            {{ bg_desc|safe }}
+        </div>
+        {% comment %}<div class="col-xs-12 col-sm-4 pull-right">
+            <h4>جوایز</h4>
+            <ul>
+                <li>سیستم انتخاب تعداد کارها در یک نوبت</li>
+                <li>سیستم تعداد کارها در یک نوبت</li>
+                <li>سیستم انتخاب تعداد کارهاانتخاب در یک نوبت</li>
+            </ul>
+        </div>{% endcomment %}
+    </div>
+</div>
+<div class=" game-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2 pull-right details-nav hidden-xs">
+                <ul class="nav nav-tabs pull-right" role="tablist">
+                    <li role="presentation" class="active"><a href="#stats" alt="" aria-controls="stats" role="tab"
+                                                              data-toggle="tab"><i
+                            class="fa fa-bar-chart"></i>آمارها</a></li>
+                    <li role="presentation"><a href="#image-gallery" alt="" aria-controls="image-gallery" role="tab"
+                                               data-toggle="tab"><i class="fa fa-image"></i>گالری تصاویر</a></li>
+                    <li role="presentation"><a href="#video-gallery" alt="" aria-controls="video-gallery" role="tab"
+                                               data-toggle="tab"><i class="fa fa-film"></i>ویدئوها</a></li>
+                    <li role="presentation"><a href="#files" alt="" aria-controls="files" role="tab"
+                                               data-toggle="tab"><i class="fa fa-file-o"></i>فایل‌های مرتبط</a></li>
+                    <li role="presentation"><a href="#expantions" alt="" aria-controls="expantions" role="tab"
+                                               data-toggle="tab"><i class="fa fa-files-o"></i>اکسپنشن‌ها</a></li>
+                    <li role="presentation"><a href="#full-info" alt="" aria-controls="full-info" role="tab"
+                                               data-toggle="tab"><i class="fa fa-info"></i>اطلاعات تکمیلی</a></li>
+                    <li role="presentation"><a href="#reviews" alt="" aria-controls="reviews" role="tab"
+                                               data-toggle="tab"><i class="fa fa-balance-scale"></i>نقد و بررسی</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-10 pull-right tab-content">
+                <div role="tabpanel" class="tab-pane fade in active " id="stats">
+                    <div class="container-fluid">
+                        <div class="row">
+
+
+                            <article class="col-xs-12 col-sm-6 col-md-3 pull-right">
+                                <h4>آمار خارجی</h4>
+                                <table>
+                                    <tr>
+                                        <td>متوسط امتیاز</td>
+                                        <td class="value">{{ overallvalreal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>امتیاز بر اساس چند رای</td>
+                                        <td class="value">{{ boardgame.users_rated }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>انحراف معیار</td>
+                                        <td class="value">{{ boardgame.stddev }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>تعداد علاقه‌مندان</td>
+                                        <td class="value">{{ boardgame.fans }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>تعداد دارندگان بازی</td>
+                                        <td class="value">{{ boardgame.num_owned }}</td>
+                                    </tr>
+
+
+                                    <th></th>
+                                    {% for item in ranks %}
+                                        <tr>
+                                            <td>رنکینگ {{ item.name }}:</td>
+                                            <td class="value">{{ item.val }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </article>
+
+                            <article class="col-xs-12 col-sm-6 col-md-3 pull-right">
+                                {% comment %}<h4>آمار داخلی</h4>
+                                <table>
+                                    <tr>
+                                        <td>متوسط امتیاز</td>
+                                        <td class="value">۷/۱۵۷</td>
+                                    </tr>
+                                    <tr>
+                                        <td>امتیاز بر اساس چند رای</td>
+                                        <td class="value">۱۴۳۵</td>
+                                    </tr>
+                                    <tr>
+                                        <td>انحراف معیار</td>
+                                        <td class="value">۱/۳۹</td>
+                                    </tr>
+                                    <tr>
+                                        <td>این صفحه دیده‌شده</td>
+                                        <td class="value">۷۳۴</td>
+                                    </tr>
+                                    <tr>
+                                        <td>تعداد دارندگان بازی</td>
+                                        <td class="value">۴۰۷۸۹۲</td>
+                                    </tr>
+                                    <tr>
+                                        <td>تعداد علاقه مندان بازی</td>
+                                        <td class="value">۴۰۳</td>
+                                    </tr>
+                                </table>{% endcomment %}
+                            </article>
+
+                            <article class=" col-xs-12 col-sm-12 col-md-6 pull-right graph">
+
+                            </article>
+                        </div>
+                    </div>
+
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="image-gallery">
+                    <div class="container-fluid">
+                        <div class="row">
+                            {% for img in images %}
+                                <article class="col-xs-12 col-sm-4 col-md-3 pull-right">
+                                    <div class="img-wrapper">
+                                        <img src="../public{{ img.image.url }}">
+                                    </div>
+                                    <span class="img-description"></span>
+                                    {% comment %}<a class="author"><i class="fa fa-user"></i></a>{% endcomment %}
+
+                                </article>
+                            {% endfor %}
+                        </div>
+
+
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="video-gallery">
+                    {% for video in videos %}
+                        <div class="col-md-3">
+                            <div style="height: 30rem" class="thumbnail">
+                                <iframe src="https://www.youtube.com/embed/{{ video.youtube_video_id }}"
+                                        allow="encrypted-media"
+                                        allowfullscreen="" width="100%" height="auto" frameborder="0"></iframe>
+                                <p style="font-family: monospace;text-align: center">{{ video.video_title }}</p>
+                                <p style="font-family: monospace;text-align: center;font-weight: bolder">{{ video.video_category }}</p>
+                                <a target="_blank" href="https://www.youtube.com/{{ video.youtube_video_id }}"><p
+                                        style="text-align: center">مشاهده در یوتیوب</p></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="files">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <ul>
+                                {% for myfile in files %}
+                                    <li style="margin-top: 5px;">
+                                        <a href="https://boardgamegeek.com/filepage/{{ myfile.file.bgg_file_page_id }}"
+                                           alt="" class="file-type">{{ myfile.ext }}</a><a class="file-title"
+                                                                                           href="https://boardgamegeek.com/filepage/{{ myfile.file.bgg_file_page_id }}"
+                                                                                           alt="">{{ myfile.file.file_title }}</a>{% comment %}<a class="file-links" href="" alt=""></a><a href=""
+                                                                                                             alt=""
+                                                                                                             class="file-links">بیش
+                                    از یکسال پیش</a><a href="" alt="" class="file-links">کردی</a>{% endcomment %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="expantions">
+                    {% for exp in expansions %}
+                        <div class="col-md-3">
+                            <div style="height: 35rem" class="thumbnail">
+                                <img class="img-responsive" src="../public{{ exp.expansion_image.url }}">
+                                <br>
+                                <p style="font-family: monospace;text-align: center">{{ exp.expansion_name }}</p>
+                                <a target="_blank"
+                                   href="https://www.boardgamegeek.com/boardgameexpansion/{{ exp.expansion_bgg_id }}"><p
+                                        style="text-align: center">مشاهده در بوردگیم‌گیک</p></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="full-info">
+                    <h5>طراحان بازی:</h5>
+                    {% for designer in designers %}
+                        <a target="_blank" href="https://boardgamegeek.com/boardgamedesigner/{{ designer.objectid }}"
+                        <p>{{ designer.name }}</p>
+                    {% endfor %}
+                    <h5>هنرمندان بازی:</h5>
+                    {% for artist in artists %}
+                        <a target="_blank" href="https://boardgamegeek.com/boardgameartist/{{ artist.objectid }}"
+                        <p>{{ artist.name }}</p>
+                    {% endfor %}
+                    <h5>ناشران بازی:</h5>
+                    {% for pub in publishers %}
+                        <a target="_blank" href="https://boardgamegeek.com/boardgamepublisher/{{ pub.objectid }}"
+                        <p>{{ pub.name }}</p>
+                    {% endfor %}
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="reviews">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <ul>
+                                {% for forum in forums %}
+                                    <li style="margin-top: 5px;">
+                                        <a href="https://boardgamegeek.com/thread/{{ forum.bgg_forum_id }}"
+                                           alt="" class="file-type">{{ forum.forum_category }}</a><a class="file-title"
+                                                                                                     href="https://boardgamegeek.com/thread/{{ forum.bgg_forum_id }}"
+                                                                                                     alt="">{{ forum.forum_title }}</a>{% comment %}<a class="file-links" href="" alt=""></a><a href=""
+                                                                                                             alt=""
+                                                                                                             class="file-links">بیش
+                                    از یکسال پیش</a><a href="" alt="" class="file-links">کردی</a>{% endcomment %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/script.js" %}"></script>
+    <script src="{% static "js/jquery.star-rating-svg.js" %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

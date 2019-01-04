@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static "css/register.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+    <style>
+        .main-agileinfo input{
+            font-family: IRANSans;
+            letter-spacing: 0;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-top: 4%" id="main-logo" class="col-xs-offset-4 col-xs-4">
+    <a href="/" alt="قفلی بُردگیم" title="بانک اطلاعاتی بازی‌های فکری و بُردگیم"><img
+            style="margin-right: auto;margin-left: auto;display: flex;" src="{% static "images/ghofli-logo-s.svg" %}"
+            class="hidden-xs"><img style="margin-right: auto;margin-left: auto;display: flex;"
+            src="{% static "images/ghofli-logo-xs.svg" %}" class="visible-xs"></a>
+</div>
+<div style="margin-top: 7%;border-radius: 20px" class="main-agileinfo">
+    <div class="agileits-top">
+        <form action="" method="post">
+            {% csrf_token %}
+            <input class="text" name="username" placeholder="تام کاربری" required="" type="text">
+            <input class="text email" name="email" placeholder="پست الکترونیک" required="" type="email">
+            <input class="text" name="password" placeholder="زمز عبور" required="" type="password">
+            <input class="text w3lpass" name="repassword" placeholder="تکرار رمز عبور" required="" type="password">
+            <input style="border-radius: 10px" value="ثبت نام" type="submit">
+        </form>
+        <p><a href="#">اگر حساب کاربری دارید وارد شوید</a></p>
+    </div>
+</div>
+
+</body>
+</html>
